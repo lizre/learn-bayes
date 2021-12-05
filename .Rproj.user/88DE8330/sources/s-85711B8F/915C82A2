@@ -1,0 +1,24 @@
+{
+    "id": "915C82A2",
+    "path": "~/Downloads/learn_bayes/abtest_proportions.R",
+    "project_path": "abtest_proportions.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1638712059841.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "cursorPosition": "9,9",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1638712067,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1638712067594,
+    "read_only": false,
+    "read_only_alternatives": []
+}

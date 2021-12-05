@@ -1,0 +1,185 @@
+# setup and import data
+here::here()
+prepost = read.csv("data/prepost_joined.csv") # example paired t test data
+prepost
+View(prepost)
+indep_ttest = read.csv("test.csv") # example independent groups t test data
+indep_ttest = read.csv("data/test.csv") # example independent groups t test data
+View(prepost)
+View(indep_ttest)
+library(fabricatr)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+time_session_begin = NA,
+time_session_end = NA,
+group = as.integer(rnorm(N, 1.5, .5)),
+deviceInfo_osVersion = NA,
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+id = (1:N),
+group = as.integer(rnorm(N, 1.5, .5)),
+deviceInfo_osVersion = NA,
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = as.integer(rnorm(N, 1.5, .5)),
+continuous_var = rnorm(N, 3.5, 1.5),
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample(1:2),
+continuous_var_num = rnorm(N, 3.5, 1.5),
+continuous_var_int = as.integer(rnorm(N, 5, 1)),
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:2), N),
+continuous_var_num = rnorm(N, 3.5, 1.5),
+continuous_var_int = as.integer(rnorm(N, 5, 1)),
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:2), N, replace = T),
+continuous_var_num = rnorm(N, 3.5, 1.5),
+continuous_var_int = as.integer(rnorm(N, 5, 1)),
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+groups = 2 # how many experimental groups
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = rnorm(N, 3.5, 1.5), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 3.5, 1.5),2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 12, 1.5),2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 25,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 12, 3),2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+View(data)
+library(readr)
+readr::write_csv(data, "data/demo_data.csv")
+demo_data <- readr::read_csv("data/demo_data.csv")
+View(demo_data)
+data <- list(y1 = demo_data$binary_var[group==1],
+n1 = 1024,
+y2 = 57,
+n2 = 1009)
+data <- list(y1 = demo_data$binary_var[demo_data$group==1],
+n1 = 1024,
+y2 = 57,
+n2 = 1009)
+data <- list(y1 = demo_data$binary_var[demo_data$group==1],
+n1 = nrow(demo_data[demo_data$group==1]),
+y2 = 57,
+n2 = 1009)
+demo_data[demo_data$group==1]
+nrow(demo_data$group[demo_data$group==1])
+demo_data$group[demo_data$group==1]
+data <- list(y1 = demo_data$binary_var[demo_data$group==1],
+n1 = length(demo_data$group[demo_data$group==1]),
+y2 = 57,
+n2 = 1009)
+length(demo_data$group[demo_data$group==1])
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_int[demo_data$group==1],
+demo_data$continous_var_int[demo_data$group==2],
+paired=FALSE, rscale=.707)
+# setup and import data
+source("requirements.R")
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_int[demo_data$group==1],
+demo_data$continous_var_int[demo_data$group==2],
+paired=FALSE, rscale=.707)
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 500,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 12, 3), 2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_int[demo_data$group==1],
+demo_data$continous_var_int[demo_data$group==2],
+paired=FALSE, rscale=.707)
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_num[demo_data$group==1],
+demo_data$continous_var_num[demo_data$group==2],
+paired=FALSE, rscale=.707)
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_num[demo_data$group==1],
+y = demo_data$continous_var_num[demo_data$group==2],
+paired=FALSE, rscale=.707)
+demo_data$continous_var_num[demo_data$group==1]
+data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 500,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 12, 3), 2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+demo_data <- fabricatr::fabricate(
+person_identifier = add_level(
+N = 500,
+group = sample((1:groups), N, replace = T), #
+continuous_var_num = round(rnorm(N, 12, 3), 2), # like $ spent
+continuous_var_int = as.integer(rnorm(N, 5, 1)), # like # of something purchased
+binary_var = draw_binary(N = N, prob = 0.25)
+))
+readr::write_csv(data, "data/demo_data.csv")
+# BayesFactor indep t test -----
+demo_ttest <- ttestBF(x = demo_data$continous_var_num[demo_data$group==1],
+y = demo_data$continous_var_num[demo_data$group==2],
+paired=FALSE, rscale=.707)
+demo_data$continous_var_num[demo_data$group==2]
+demo_data$continous_var_num
+View(demo_data)
+View(demo_data$continuous_var_num)
+View(demo_data$continuous_var_num)
+colnames(demo_data)
+View(demo_data)
+demo_data$continous_var_num[demo_data$group=="2"]
+demo_data$group
+typeof(demo_data$group)
